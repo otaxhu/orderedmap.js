@@ -1,7 +1,9 @@
 "use strict";
 
 function __readonlyProp(obj, prop, value) {
+  // @ts-ignore
   const attributes = __readonlyProp.attributes ||
+    // @ts-ignore
     (__readonlyProp.attributes = {
       enumerable: true,
       configurable: true,
@@ -15,13 +17,21 @@ function __readonlyProp(obj, prop, value) {
  * @template K, V
  */
 export class OrderedMap extends Map {
+
+  /**
+   * @type {_LinkedList<K, V>}
+   */
+  #list;
+
   /**
    * @param {IterableIterator<readonly [K, V]> | readonly (readonly [K, V])[] | null=} iterable
    */
   constructor(iterable) {
+
+    super();
+
     if (iterable === undefined || iterable === null) {
-      super();
-      this.__list = new _LinkedList();
+      this.#list = new _LinkedList();
       return;
     }
 
@@ -29,13 +39,7 @@ export class OrderedMap extends Map {
       throw TypeError("'iterable' parameter must implement IterableIterator interface");
     }
 
-    super();
-
-    /**
-     * @type {_LinkedList<K, V>}
-     * @private
-     */
-    this.__list = new _LinkedList();
+    this.#list = new _LinkedList();
 
     for (const item of iterable) {
       if (item.length < 2) {
@@ -62,7 +66,7 @@ export class OrderedMap extends Map {
       return this;
     }
 
-    element = this.__list.pushBack(key, value);
+    element = this.#list.pushBack(key, value);
     super.set(key, element);
 
     return this;
@@ -88,7 +92,7 @@ export class OrderedMap extends Map {
 
   clear() {
     super.clear();
-    this.__list.clear();
+    this.#list.clear();
   }
 
   /**
@@ -103,7 +107,7 @@ export class OrderedMap extends Map {
       return false;
     }
 
-    this.__list.remove(el);
+    this.#list.remove(el);
     super.delete(key);
 
     return true;
@@ -141,14 +145,14 @@ export class OrderedMap extends Map {
    * @returns {import("./orderedmap").Element<K, V>=}
    */
   back() {
-    return this.__list.back();
+    return this.#list.back();
   }
 
   /**
    * @returns {import("./orderedmap").Element<K, V>=}
    */
   front() {
-    return this.__list.front();
+    return this.#list.front();
   }
 
   /**
@@ -207,14 +211,13 @@ class _LinkedList {
     /**
      * @type {import("./orderedmap").Element<K, V>}
      */
-    const element = {
-      get key() {
-        return key;
-      },
-      get value() {
-        return value;
-      },
-    };
+    // @ts-ignore
+    const element = {};
+
+    __readonlyProp(element, "key", key);
+    __readonlyProp(element, "value", value);
+    __readonlyProp(element, "nextElement", undefined);
+    __readonlyProp(element, "prevElement", undefined);
 
     // The list is empty
     if (!this.__root.prevElement) {
