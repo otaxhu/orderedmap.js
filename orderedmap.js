@@ -16,7 +16,7 @@ function __readonlyProp(obj, prop, value) {
 /**
  * @template K, V
  */
-export class OrderedMap extends Map {
+export default class OrderedMap extends Map {
 
   /**
    * @type {_LinkedList<K, V>}
