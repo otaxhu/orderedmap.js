@@ -8,8 +8,8 @@ export type Element<K, V> = {
 export declare class OrderedMap<K, V> extends Map<K, V> {
 
   public constructor(iterable?: IterableIterator<readonly [K, V]> |
-    readonly (readonly [K, V])[] |
-    null);
+                                readonly (readonly [K, V])[] |
+                                null);
 
   readonly public size: number;
 
@@ -33,6 +33,10 @@ export declare class OrderedMap<K, V> extends Map<K, V> {
   public keys(): IterableIterator<K>;
 
   public [Symbol.iterator](): IterableIterator<[K, V]>;
+
+  public static groupBy<GroupKey, GroupValue>(iterable: IterableIterator<GroupValue> | readonly GroupValue[],
+                                              callbackFunc: (item: GroupValue, index: number) => GroupKey
+                                              ): OrderedMap<GroupKey, GroupValue[]>;
 
   /*
    * New methods that extends Map class with more functionality

@@ -157,6 +157,34 @@ export class OrderedMap extends Map {
   [Symbol.iterator]() {
     return this.entries();
   }
+
+  /**
+   * @template GroupKey, GroupValue
+   *
+   * @param {IterableIterator<GroupValue>} iterableElements
+   * @param {(item: GroupValue, index: number) => GroupKey} callbackFunc
+   * @returns {OrderedMap<GroupKey, GroupValue[]>}
+   */
+  static groupBy(iterableElements, callbackFunc) {
+    if (!iterableElements || typeof iterableElements !== "object" || !iterableElements[Symbol.iterator]) {
+      throw TypeError("'iterable' parameter must implement IterableIterator interface");
+    }
+    if (!callbackFunc || typeof callbackFunc !== "function") {
+      throw TypeError("'callbackFunc' parameter must be a function");
+    }
+    const map = new OrderedMap();
+    let i = 0;
+    for (const item of iterableElements) {
+      const group = callbackFunc(item, i++);
+      let prevItems = map.get(group);
+      if (!prevItems) {
+        prevItems = [];
+        map.set(group, prevItems);
+      }
+      prevItems.push(item);
+    }
+    return map;
+  }
 }
 
 /**
