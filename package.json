@@ -1,7 +1,7 @@
 {
   "name": "@otaxhu/orderedmap",
   "type": "module",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Ordered Map implementation for JavaScript",
   "main": "orderedmap.js",
   "scripts": {
