@@ -5,7 +5,7 @@ export type Element<K, V> = {
   readonly prevElement?: Element<K, V>,
 };
 
-export declare class OrderedMap<K, V> extends Map<K, V> implements Iterable<[K, V]> {
+export default class OrderedMap<K, V> extends Map<K, V> implements Iterable<[K, V]> {
 
   public constructor(iterable?: IterableIterator<readonly [K, V]> |
                                 readonly (readonly [K, V])[] |
@@ -16,7 +16,7 @@ export declare class OrderedMap<K, V> extends Map<K, V> implements Iterable<[K, 
    *
    * @returns The number of entries in the OrderedMap
    */
-  readonly public size: number;
+  public readonly size: number;
 
   /**
    * Adds a new entry with a specified key and value to the OrderedMap. If an entry with the same
