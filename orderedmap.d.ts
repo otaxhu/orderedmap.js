@@ -112,4 +112,10 @@ export default class OrderedMap<K, V> extends Map<K, V> implements Iterable<[K, 
    *          map is empty
    */
   public front(): Element<K, V> | undefined;
+
+  /**
+   * @returns New array populated with the results of calling the callback function for each entry
+   *          in the OrderedMap starting from the front
+   */
+  public mapToArray<R>(callbackFunc: (key: K, value: V, index: number) => R, thisArg: any): R[];
 }

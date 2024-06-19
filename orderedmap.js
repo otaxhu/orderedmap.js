@@ -136,6 +136,9 @@ export default class OrderedMap extends Map {
    * @param {any} thisArg
    */
   forEach(callbackFunc, thisArg) {
+    if (!callbackFunc || typeof callbackFunc !== "function") {
+      throw TypeError("'callbackFunc' parameter must be a function");
+    }
     for (let el = this.front(); el; el = el.nextElement) {
       callbackFunc.call(thisArg, el.value, el.key, this);
     }
@@ -188,6 +191,26 @@ export default class OrderedMap extends Map {
       prevItems.push(item);
     }
     return map;
+  }
+
+  /**
+   * @template R
+   *
+   * @param {(key: K, value: V, index: number) => R} callbackFunc 
+   * @param {any} thisArg
+   *
+   * @returns {R[]}
+   */
+  mapToArray(callbackFunc, thisArg) {
+    if (!callbackFunc || typeof callbackFunc !== "function") {
+      throw TypeError("'callbackFunc' parameter must be a function");
+    }
+    const array = [];
+    let i = 0;
+    for (let el = this.front(); el; el = el.nextElement) {
+      array.push(callbackFunc.call(thisArg, el.key, el.value, i++));
+    }
+    return array;
   }
 }
 
